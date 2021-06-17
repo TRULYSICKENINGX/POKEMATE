@@ -84,6 +84,7 @@ function Regenerate()
 	KeyTyped("a")
 	sleep(1000)
 	KeyTyped("a")
+	sleep(500)
 	FalseSwipePP = 48
 	AssistPP = 32
 	GoOutOfPC();
@@ -114,7 +115,7 @@ function GoToDitto1()
 	Trainer.MoveUp(true, 3)
 	sleep(3000)
 	CheckPosition(10, 12)
-	Trainer.MoveUp(true, 2)
+	Trainer.MoveUp(true, 2) --all methods currently use the same path, you can change these and set it up if you like
 end
 function GoToDitto2()
 	Trainer.MoveLeft(true, 8)
@@ -197,12 +198,15 @@ end
 
 
 function DoBattle()
+	if(Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
+		Shinies = Shinies + 1
+		print("SHINY FOUND ("..Shinies..")")
+		sleeph(24)
+	end
 	if(Battle.Active.GetPokemonID(1, 0) ~= 132) then
 		count = 0;
 		while (Trainer.IsInBattle()) do
-
 			WaitToAttack()
-
 			Battle.DoAction(0,0,"RUN",0,0)
 			print("Escaped!")
 			while(Trainer.IsInBattle()) do
