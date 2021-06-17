@@ -14,9 +14,9 @@ PokemonName = "MEOWTHEATER69" -- Set this to your Pokemon's name, nickname if ap
 AbilityName = "Frisk"
 SweetScentHotkey = "h9" -- Put Sweet Scent on Hotkey 9
 TeleportHotkey = "h8" -- Put Teleport on Hotkey 8
-Cycles = 30 -- Cycles before the script relogs you to potentially help avoid detection, 10 Cycles is approximately 30 minutes (don't set this too high)
+Cycles = 30 -- Cycles before the script relogs you to potentially help avoid detection, 10 Cycles is approximately 30 minutes (don't set this value too high)
 
--- Make sure to cut the bush once before starting (the script will perform a hard reset anyways if you get don't, but this saves one relog)
+-- Make sure to cut the bush once before starting (the script will perform a hard reset anyways if you get don't, but this bypasses one relog)
 
 function RelogReset()
 	print("Resetting...")

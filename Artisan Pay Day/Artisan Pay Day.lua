@@ -1,12 +1,12 @@
 LeppaBerryHotkey = "h3" --put leppa berry on hotkey 3
 Shinies = 0
 PayDayPP = 32 --set this to 20 if you did not PP Max your PayDay (but you really should!)
-LeppaBerriesUsed = 0 --roughly 12 berries an hour
+Reward = 450 --estimate, given Smeargles are level 40-50 in Artisan Cave
 Encounters = 0 --roughly 130 an hour
 CycleCount = 0
-Reward = 444 --estimate
-Cycles = 100 --one cycle is 30 encounters, relogs after set Cycles
-LeppaBerriesTotal = 90 --SET (make sure your PayDay is full PP before starting, it will end 5 before your actual berry count to avoid bugs)
+Cycles = 50 --one cycle is 30 encounters, 4 cycles per hour, relogs after set Cycles
+LeppaBerriesUsed = 0 --roughly 12 berries an hour
+LeppaBerriesTotal = 150 --set this (make sure your PayDay is full PP before starting, this will end 5 before your actual berry count to avoid bugs)
 
 function WaitToAttack()
     while(not Battle.CanAttack() and Trainer.IsInBattle()) do
@@ -57,13 +57,20 @@ function DoBattle()
 			WaitToAttack()
 			Battle.DoAction(0,0,"SKILL",6,0)
 			PayDayPP = PayDayPP - 1
+  		Encounters = Encounters + 1
 			while(Trainer.IsInBattle()) do
 				sleep(1000)
 			end
 		end
-		Encounters = Encounters + 1
-		print(" ==================================================\n          "..PayDayPP.." PayDay PP\n          "..Encounters.." Encounters\n          $"..(Reward*Encounters))
-		if (not Trainer.IsInBattle()) then
+    if (not Trainer.IsInBattle()) then
+		  print("       "..PayDayPP.." PP")
+      print("       "..Encounters.." Encounter(s)")
+      print("       $"..(Reward*Encounters))
+      --For some reason the below prints break the script; you can put these under other functions if you wish to use them still
+      --print("       "..(LeppaBerriesTotal-LeppaBerriesUsed).." Berries Remaining")
+      --print("       "..CycleCount.." Cycle(s)")
+      --print("       "..ResetCount.." Reset(s)")
+      print(" ==================================================")
 			return
 		end
 	end
@@ -100,7 +107,6 @@ function Recovery() --TWO
 		LeppaBerriesUsed = LeppaBerriesUsed + 1
 		sleep(2000)
 	end
-	print(" -- "..PayDayPP.." PayDay PP -- "..LeppaBerriesUsed.." Leppa Berries Used -- "..(LeppaBerriesTotal-LeppaBerriesUsed).." Leppa Berries Remaining")
 end
 
 
@@ -111,7 +117,6 @@ function Main()
 		print("Using Berries...")
 		Recovery()
 		CycleCount = CycleCount + 1
-		print("          "..CycleCount.." Cycles")
 	end
   print("Resetting...")
 	sleep(500)
@@ -128,7 +133,6 @@ function Main()
 		end
 	sleep(5000)
 	ResetCount = ResetCount + 1
-	print("Success... "..ResetCount.." Relog(s)")
 	Main()
 end
 

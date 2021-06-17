@@ -91,7 +91,7 @@ function Regenerate()
 end
 
 
-function GoToDitto1()
+function GoToDitto1() --all methods currently use the same path, you can change these and set it up if you like
 	Trainer.MoveLeft(true, 8)
 	CheckPosition(7, 8)
 	Trainer.MoveDown(true, 2)
@@ -115,7 +115,7 @@ function GoToDitto1()
 	Trainer.MoveUp(true, 3)
 	sleep(3000)
 	CheckPosition(10, 12)
-	Trainer.MoveUp(true, 2) --all methods currently use the same path, you can change these and set it up if you like
+	Trainer.MoveUp(true, 2)
 end
 function GoToDitto2()
 	Trainer.MoveLeft(true, 8)
