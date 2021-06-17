@@ -8,15 +8,15 @@ MankeyCount = 0
 MeowthCount = 0
 FixBushCount = 0
 CycleCount = 0
-PokemonID = 217669031 -- Change That, you get the Pokemon ID by enabling debugging and changing the Item
-PokemonName = "MEOWTHEATER69"
-AbilityName = "Frisk"
 ItemCount = 0
-SweetScentHotkey = "h9"
-TeleportHotkey = "h8"
-Cycles = 30 -- Cycles before reset, 10 Cycles = c.a. 30 minutes
+PokemonID = 217669031 -- Get your PokemonID by changing your Pokemon's items in Debugging Mode
+PokemonName = "MEOWTHEATER69" -- Set this to your Pokemon's name, nickname if applicable (ex. my Shuppet is named MEOWTHEATER69)
+AbilityName = "Frisk"
+SweetScentHotkey = "h9" -- Put Sweet Scent on Hotkey 9
+TeleportHotkey = "h8" -- Put Teleport on Hotkey 8
+Cycles = 30 -- Cycles before the script relogs you to potentially help avoid detection, 10 Cycles is approximately 30 minutes (don't set this too high)
 
---FIX BUSH IF FRESH LOGIN
+-- Make sure to cut the bush once before starting (the script will perform a hard reset anyways if you get don't, but this saves one relog)
 
 function RelogReset()
 	print("Resetting...")
@@ -120,7 +120,7 @@ function GoOutOfPC()
 end
 
 
-function Regenerate()	
+function Regenerate()
 	sleep(2000)
 	Trainer.TalkToNPC()
 	sleep(1000)
@@ -252,7 +252,7 @@ function DoBattle()
 	if(Battle.Active.GetPokemonID(1, 1) == 56) then
 		print(" ========== Mankey Horde ==========")
 		MankeyCount = MankeyCount + 1
-		while (Trainer.IsInBattle()) do 
+		while (Trainer.IsInBattle()) do
 			LastPokemonHealth = Battle.Active.GetPokemonHealth(0,CurrentPokemon)
 			WaitToAttack()
 			Battle.DoAction(0,0,"RUN",0,0)
@@ -267,7 +267,7 @@ function DoBattle()
 	sleep(1000)
 	if(not Battle.Active.HasPokemonActiveAbility(PokemonName, AbilityName)) then
 		print(" ========== Meowth Horde, No Item Found ==========")
-		while (Trainer.IsInBattle()) do 
+		while (Trainer.IsInBattle()) do
 			LastPokemonHealth = Battle.Active.GetPokemonHealth(0,CurrentPokemon)
 			WaitToAttack()
 			Battle.DoAction(0,0,"RUN",0,0)
@@ -290,7 +290,7 @@ function DoBattle()
 				sleep(1000)
 			end
 			if(count == 2) then
-				
+
 				Battle.DoAction(0,0,"SKILL",168,49)
 				sleep(1000)
 			end

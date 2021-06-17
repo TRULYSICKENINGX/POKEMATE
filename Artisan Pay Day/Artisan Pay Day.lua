@@ -1,11 +1,11 @@
 LeppaBerryHotkey = "h3" --put leppa berry on hotkey 3
 Shinies = 0
-PayDayPP = 32 --SET (20 if you did not PP max PayDay)
+PayDayPP = 32 --set this to 20 if you did not PP Max your PayDay (but you really should!)
 LeppaBerriesUsed = 0 --roughly 12 berries an hour
 Encounters = 0 --roughly 130 an hour
 CycleCount = 0
 Reward = 444 --estimate
-Cycles = 100 --one cycle is 30 encounters, relogs after
+Cycles = 100 --one cycle is 30 encounters, relogs after set Cycles
 LeppaBerriesTotal = 90 --SET (make sure your PayDay is full PP before starting, it will end 5 before your actual berry count to avoid bugs)
 
 function WaitToAttack()
@@ -44,7 +44,7 @@ function DoBattle()
 		sleeph(24)
 	end
 	if(Battle.Active.GetPokemonID(1, 0) ~= 235 or Battle.GetBattleType() ~= "SINGLE_BATTLE") then
-		while (Trainer.IsInBattle()) do 
+		while (Trainer.IsInBattle()) do
 			WaitToAttack()
 			Battle.DoAction(0,0,"RUN",0,0)
 			print(" Escaped!")
@@ -108,15 +108,27 @@ function Main()
 	for i=1,Cycles do
 		print("Searching...")
 		MainProcedure()
-		print("Recovering...")
+		print("Using Berries...")
 		Recovery()
 		CycleCount = CycleCount + 1
 		print("          "..CycleCount.." Cycles")
 	end
+  print("Resetting...")
+	sleep(500)
+	CheckForWildEncounter()
+	sleep(1500)
 	Logout()
-	sleepm(5)
+	sleepm(1)
 	Login()
+	sleep(2000)
+		if(Trainer.GetMapID() == -1) then
+			KeyTyped("A")
+			sleep(4000)
+			CheckForWildEncounter()
+		end
 	sleep(5000)
+	ResetCount = ResetCount + 1
+	print("Success... "..ResetCount.." Relog(s)")
 	Main()
 end
 

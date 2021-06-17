@@ -3,7 +3,7 @@ AssistPP = 32
 BikeHotkey = "h2"
 TeleportHotkey = "h8"
 DigHotkey = "h6"
-DittosCaptured = 0 
+DittosCaptured = 0
 ThrownBalls = 0
 BallsUsed = 0
 Cycles = 99 --one cycle yields around 25 Dittos
@@ -67,7 +67,7 @@ function GoOutOfPC()
 end
 
 
-function Regenerate()	
+function Regenerate()
 	CheckPosition(7,4)
 	Trainer.TalkToNPC()
 	sleep(1000)
@@ -199,8 +199,8 @@ end
 function DoBattle()
 	if(Battle.Active.GetPokemonID(1, 0) ~= 132) then
 		count = 0;
-		while (Trainer.IsInBattle()) do 
-			
+		while (Trainer.IsInBattle()) do
+
 			WaitToAttack()
 
 			Battle.DoAction(0,0,"RUN",0,0)
@@ -250,7 +250,7 @@ function DoBattle()
 				print("Captured! Used "..BallsUsed.." Ball(s).")
                 return
             end
-			
+
 		end
 	end
 end
@@ -303,7 +303,7 @@ function SearchForDitto()
 		sleep(1000)
 		DoBattle()
 		sleep(1000)
-		
+
 		--KeyTyped("b")
 
 		print("Assist PP = "..AssistPP.." / FalseSwipe PP = "..FalseSwipePP.." / Available Balls = "..(TotalBalls-ThrownBalls).." / Catch Rate = "..(DittosCaptured/ThrownBalls*100).." / Ditto Goal = "..DittoGoal.." / Dittos = "..DittosCaptured)
