@@ -1,5 +1,5 @@
 # Intro
-This is very similar to Fiereu's initial script. The only thing you need is access to Cerulean City in Kanto, one Pokemon, and Teleport (Pokemon or Ocarina).
+This is very similar to Fiereu's initial script. The only thing you need is access to Cerulean City in Kanto, one Shuppet, Sweet Scent, and Teleport (Pokemon or Ocarina).
 
 It uses a Shuppet with Frisk and Thief to farm Meowth's near Cerulean City, and is designed to run for long durations (I've hit thousands of encounters with no issues):
 
