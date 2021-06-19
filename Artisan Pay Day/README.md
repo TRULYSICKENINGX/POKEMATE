@@ -15,3 +15,12 @@ For effective use, you need a lv. 100 Meowth or Persian with Pay Day (PP Maxed) 
 
 Having a Meowth is more efficient, as you can get one with the Pickup trait to farm some extra items.
 
+Once in Artisan Cave, go anywhere on this red line.
+
+Set hotkeys according to the script as well as your total leppa berries available (minus 10, in case of issues).
+
+Start script!
+
+![image](https://user-images.githubusercontent.com/86049285/122657401-1ebc2880-d118-11eb-8423-e4ee4234e3b6.png)
+
+
