@@ -36,7 +36,7 @@ Once Ditto is caught the battle will end.
 # Instructions
 Set your total Repeat Balls available, as well as any hotkeys (Dig, Teleport).
 
-Make sure your Synchronize Pokemon is your lead, CATCH Smeargle second, and SLEEP Pokemon third.
+Make sure your Synchronize Pokemon is your lead, CATCH Smeargle second, and SLEEP Pokemon third. You want Dittos to fill up the rest of your party, I recommend catching them manually first then script farming.
 
 Go to Fallabor Town's PC and start inside, next to and facing the nurse. 
 
