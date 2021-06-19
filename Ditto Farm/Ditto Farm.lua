@@ -1,14 +1,14 @@
 FalseSwipePP = 48
 AssistPP = 32
-BikeHotkey = "h2"
-TeleportHotkey = "h8"
-DigHotkey = "h6"
+BikeHotkey = "h2" --set
+TeleportHotkey = "h8" --set
+DigHotkey = "h6" --set
 DittosCaptured = 0
 ThrownBalls = 0
 BallsUsed = 0
 Cycles = 99 --one cycle yields around 25 Dittos
-DittoGoal = 999 --set this
-TotalBalls = 150 --set this
+DittoGoal = 999 --set this, script ends after this many Dittos are caught
+TotalBalls = 150 --set this, 10 lower than your true ball count
 
 function CheckPosition(X, Y)
 	ErrorCorrection(X, Y)
@@ -317,9 +317,9 @@ function SearchForDitto()
 		end
 		sleep(500)
 	end
-	if(DittosCaptured==DittoGoal or ThrownBalls==TotalBalls) then --conditions to end farming
+	if(DittosCaptured==DittoGoal or ThrownBalls>=TotalBalls) then --conditions to end farming
 	Logout()
-	sleeph(24)
+	Stop()
 	end
 end
 

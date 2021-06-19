@@ -1,5 +1,4 @@
-ThiefPP = 40
-SweetScentPP = 32
+
 LastPokemonHealth = 12
 CurrentPokemon = 0
 Encounters = -1
@@ -9,6 +8,8 @@ MeowthCount = 0
 FixBushCount = 0
 CycleCount = 0
 ItemCount = 0
+ThiefPP = 40
+SweetScentPP = 32
 PokemonID = 217669031 -- Get your PokemonID by changing your Pokemon's items in Debugging Mode
 PokemonName = "MEOWTHEATER69" -- Set this to your Pokemon's name, nickname if applicable (ex. my Shuppet is named MEOWTHEATER69)
 AbilityName = "Frisk"
