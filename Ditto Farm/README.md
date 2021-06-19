@@ -34,7 +34,7 @@ The fight plays out as follows-
 Once Ditto is caught the battle will end. 
 
 # Instructions
-Set your total Repeat Balls available, as well as any hotkeys (Dig, Teleport).
+Set your total Repeat Balls available, as well as any hotkeys (Bike, Dig, Teleport).
 
 Make sure your Synchronize Pokemon is your lead, CATCH Smeargle second, and SLEEP Pokemon third. You want Dittos to fill up the rest of your party, I recommend catching them manually first then script farming.
 
