@@ -4,7 +4,25 @@ This method is probably the most profitable in terms of pure net profit, but sel
 Still a very fun method. Repeat Balls are slightly superior to Ultra Balls. You can buy Repeat Balls in Hoenn, in the Rustboro PokeMart (after you receive a Repeat Ball on Route 116 from the Devon Employee).
 
 # Expected Payout
+Quite complex and RNG reliant, will update this later (I estimate something like 100k per hour, on average).
 
 # Setup
+The setup for this method is the most complex. 
 
+The most efficient way to currently farm good Dittos is to have:
 
+1. Lead Pokemon (I use Espeon) with the Synchronize skill and a desirable trait like Adamant (this will give you roughly a 15% extra chance for Dittos to be Adamant)
+2. A "CATCH" Smeargle, ideally level 100 that ONLY knows False Swipe and Assist
+3. A "SLEEP" Pokemon, Smeargle or other, that ONLY knows Spore
+4. The rest of your party should be full of Dittos (because Assist calls other moves in your party, and it cannot call Transform)
+
+*To make your Pokemon forget moves, talk to the Grey Haired Move Maniac in most Poke Centers*
+
+The fight plays out as follows-
+
+1. Lead Pokemon switches out instantly for the "CATCH" Smeargle (Synchronize trait needs to be lead for it to work)
+2. "CATCH" Smeargle uses False Swipe, bringing Ditto to 1 HP
+3. "CATCH" Smeargle uses Assist, calling Spore (since it's the only callable move in your party)
+4. The script will throw two Repeat Balls, then loop steps 3 and 4
+
+Once Ditto is caught the battle will end. 
