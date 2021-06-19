@@ -9,6 +9,10 @@ This is probably the most efficient use of Pay Day currently available.
 # Expected Payout
 The payout for this method is a bit on the lower side, but it is very simple and the area is not as populated as some of the other places (maybe safer?).
 
+Also, you accrue currency directly.
+
+You can expect to earn approximately 70k per hour with a Pickup Meowth, after subtracting Leppa Berry costs.
+
 # Setup
 
 For effective use, you need a lv. 100 Meowth or Persian with Pay Day (PP Maxed) and full IV/EV Attack. 
