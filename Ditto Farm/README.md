@@ -16,7 +16,7 @@ The most efficient way to currently farm good Dittos is to have:
 3. A "SLEEP" Pokemon, Smeargle or other, that ONLY knows Spore
 4. The rest of your party should be full of Dittos (because Assist calls other moves in your party, and it cannot call Transform)
 
-*To make your Pokemon forget moves, talk to the Grey Haired Move Maniac in most Poke Centers*
+**To make your Pokemon forget moves, talk to the Grey Haired Move Maniac in most Poke Centers**
 
 The fight plays out as follows-
 
