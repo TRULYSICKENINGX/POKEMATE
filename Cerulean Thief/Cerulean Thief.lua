@@ -2,6 +2,7 @@
 LastPokemonHealth = 12
 CurrentPokemon = 0
 Encounters = -1
+Count = 0 --For Shiny Encounters
 ResetCount = 0
 MankeyCount = 0
 MeowthCount = 0
@@ -239,16 +240,162 @@ end
 
 
 function WaitToAttack()
-	while(not Battle.CanAttack()) do
-		sleep(500)
+    while(not Battle.CanAttack() and Trainer.IsInBattle()) do
+        sleep(500)
+    end
+end
+
+function CatchHordeShiny() --17, 33, 49
+	print(" ========== HORDE SHINY FOUND ==========")
+	if(Battle.Active.GetPokemonRarity(1,1) == "SHINY") then
+		count = 0
+		WaitToAttack()
+		while(count <= 5) do
+			if(count == 0) then --swap to fifth slot Pokemon (needs damage, starmie)
+				Battle.DoAction(0,0,"SWAP",5,0)
+				sleep(1000)
+			end
+			if(count == 1) then --thunderbolt on middle horde
+				Battle.DoAction(0,0,"SKILL",85,33)
+				sleep(1000)
+			end
+			if(count == 2) then --thunderbolt on right horde
+				Battle.DoAction(0,0,"SKILL",85,49)
+				sleep(1000)
+			end
+			if(count == 3) then --switch to second slot Pokemon (False Swipe)
+				Battle.DoAction(0,0,"SWAP",1,0)
+				sleep(1000)
+			end
+			if(count == 4) then --use False Swipe on left HORDE
+				Battle.DoAction(0,0,"SKILL",206,17)
+				sleep(1000)
+			end
+			if(count == 5) then --use Ball
+				Battle.DoItemInteraction(0,0,"ITEM",5002,0,-1) --UltraBall, not horde position reliant
+				count = 4
+				sleep(1000)
+			end
+      count = count + 1
+      WaitToAttack()
+      if(not Trainer.IsInBattle()) then
+        print("Horde Shiny Captured!")
+        return
+      end
+		end
+	end
+	if(Battle.Active.GetPokemonRarity(1,2) == "SHINY") then
+		count = 0
+		WaitToAttack()
+		while(count <= 5) do
+			if(count == 0) then --swap to fifth slot Pokemon (needs damage, starmie)
+				Battle.DoAction(0,0,"SWAP",5,0)
+				sleep(1000)
+			end
+			if(count == 1) then --thunderbolt on left horde
+				Battle.DoAction(0,0,"SKILL",85,17)
+				sleep(1000)
+			end
+			if(count == 2) then --thunderbolt on right horde
+				Battle.DoAction(0,0,"SKILL",85,49)
+				sleep(1000)
+			end
+			if(count == 3) then --switch to second slot Pokemon (False Swipe)
+				Battle.DoAction(0,0,"SWAP",1,0)
+				sleep(1000)
+			end
+			if(count == 4) then --use False Swipe on middle HORDE
+				Battle.DoAction(0,0,"SKILL",206,33)
+				sleep(1000)
+			end
+			if(count == 5) then --use Ball
+				Battle.DoItemInteraction(0,0,"ITEM",5002,0,-1) --UltraBall, not horde position reliant
+				count = 4
+				sleep(1000)
+			end
+      count = count + 1
+      WaitToAttack()
+      if(not Trainer.IsInBattle()) then
+        print("Horde Shiny Captured!")
+        return
+      end
+		end
+	end
+	if(Battle.Active.GetPokemonRarity(1,3) == "SHINY") then
+		count = 0
+		WaitToAttack()
+		while(count <= 5) do
+			if(count == 0) then --swap to fifth slot Pokemon (needs damage, starmie)
+				Battle.DoAction(0,0,"SWAP",5,0)
+				sleep(1000)
+			end
+			if(count == 1) then --thunderbolt on left horde
+				Battle.DoAction(0,0,"SKILL",85,17)
+				sleep(1000)
+			end
+			if(count == 2) then --thunderbolt on middle horde
+				Battle.DoAction(0,0,"SKILL",85,33)
+				sleep(1000)
+			end
+			if(count == 3) then --switch to second slot Pokemon (False Swipe)
+				Battle.DoAction(0,0,"SWAP",1,0)
+				sleep(1000)
+			end
+			if(count == 4) then --use False Swipe on right HORDE
+				Battle.DoAction(0,0,"SKILL",206,49)
+				sleep(1000)
+			end
+			if(count == 5) then --use Ball
+				Battle.DoItemInteraction(0,0,"ITEM",5002,0,-1) --UltraBall, not horde position reliant
+				count = 4
+				sleep(1000)
+			end
+      count = count + 1
+      WaitToAttack()
+      if(not Trainer.IsInBattle()) then
+        print("Horde Shiny Captured!")
+        return
+      end
+		end
+	end
+end
+
+function CatchSingleShiny()
+	print(" ========== Single SHINY FOUND ==========")
+	if(Battle.Active.GetPokemonRarity(1,0) == "SHINY") then
+		count = 0
+		WaitToAttack()
+		while(count <= 2) do
+			if(count == 0) then --swap to second Pokemon (Smeargle)
+				Battle.DoAction(0,0,"SWAP",1,0)
+				sleep(1000)
+			end
+			if(count == 1) then --use FalseSwipe
+				Battle.DoAction(0,0,"SKILL",206,0)
+				sleep(1000)
+			end
+			if(count == 2) then --use Ball
+				Battle.DoItemInteraction(0,0,"ITEM",5002,0,-1) --UltraBall
+				count = 1
+				sleep(1000)
+			end
+      count = count + 1
+      WaitToAttack()
+      if(not Trainer.IsInBattle()) then
+        print("Single Shiny Captured!")
+        return
+      end
+		end
 	end
 end
 
 
 function DoBattle()
 	if(Battle.Active.GetPokemonRarity(1, 1) == "SHINY" or Battle.Active.GetPokemonRarity(1, 2) == "SHINY" or Battle.Active.GetPokemonRarity(1, 3) == "SHINY") then
-		print(" ========== SHINY FOUND ==========")
-		sleeph(24)
+		print("HORDE SHINY FOUND")
+		CatchHordeShiny()
+		sleep(2000)
+		return
 	end
 	if(Battle.Active.GetPokemonID(1, 1) == 56) then
 		print(" ========== Mankey Horde ==========")
@@ -320,8 +467,10 @@ function CheckForWildEncounter()
 	if(Trainer.IsInBattle()) then
 		print("Wild Encounter")
 		if(Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
-		print("SHINY FOUND")
-		sleeph(24)
+			print("SINGLE SHINY FOUND")
+			CatchSingleShiny()
+			sleep(2000)
+			return
 		end
 		LastPokemonHealth = Battle.Active.GetPokemonHealth(0,CurrentPokemon)
 		if(LastPokemonHealth == -1) then
