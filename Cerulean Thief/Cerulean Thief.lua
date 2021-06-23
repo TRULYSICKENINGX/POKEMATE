@@ -412,7 +412,7 @@ function DoBattle()
 	end
 	MeowthCount = MeowthCount + 1
 	WaitToAttack()
-	sleep(1000)
+	sleep(2000)
 	if(not Battle.Active.HasPokemonActiveAbility(PokemonName, AbilityName)) then
 		print(" ========== Meowth Horde, No Item Found ==========")
 		while (Trainer.IsInBattle()) do
