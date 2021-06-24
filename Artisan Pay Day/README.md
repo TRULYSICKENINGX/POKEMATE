@@ -25,10 +25,13 @@ Set your Pay Day Pokemon as your lead, and make sure Pay Day is the first move.
 
 Once in Artisan Cave, go anywhere on this red line.
 
-Set hotkeys according to the script as well as your total leppa berries available (minus 10, in case of issues).
+Set you Leppa Berry hotkey and your total leppa berries available (minus 10, in case of issues). 
+
+You don't need to set PP anymore, and you can start the script without PP full (but don't start it at 0).
 
 Start script!
 
-![image](https://user-images.githubusercontent.com/86049285/122657401-1ebc2880-d118-11eb-8423-e4ee4234e3b6.png)
+![image](https://user-images.githubusercontent.com/86049285/123201033-c615c400-d466-11eb-84a4-6f1508a4dbbe.png)
+
 
 
