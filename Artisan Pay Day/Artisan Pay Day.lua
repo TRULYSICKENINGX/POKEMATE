@@ -1,12 +1,12 @@
 LeppaBerryHotkey = "h3" --put leppa berry on hotkey 3
 Shinies = 0
-PayDayPP = 32 --set this to 20 if you did not PP Max your PayDay (but you really should!)
+PayDayPP = 0 --set by script, don't need to set anymore
 Reward = 450 --estimate, given Smeargles are level 40-50 in Artisan Cave
 Encounters = 0 --roughly 130 an hour
 CycleCount = 0
-Cycles = 50 --one cycle is 30 encounters, 4 cycles per hour, relogs after set Cycles
+Cycles = 32 --one cycle is 30 encounters, 4 cycles per hour, relogs after set Cycles
 LeppaBerriesUsed = 0 --roughly 12 berries an hour
-LeppaBerriesTotal = 150 --set this (make sure your PayDay is full PP before starting, this will end 5 before your actual berry count to avoid bugs)
+LeppaBerriesTotal = 450 --set this (make sure your PayDay is full PP before starting, this will end 5 before your actual berry count to avoid bugs)
 
 function WaitToAttack()
     while(not Battle.CanAttack() and Trainer.IsInBattle()) do
@@ -29,7 +29,7 @@ function SearchBattle()
 		else
 			RightGoing = false
 			Trainer.MoveLeft(true, 1)
-			if(Trainer.GetX() <= 22) then
+			if(Trainer.GetX() <= 26) then
 				RightGoing = true
 			end
 		end
@@ -39,9 +39,19 @@ end
 
 function DoBattle()
 	if(Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
-		Shinies = Shinies + 1
-		print("SHINY FOUND ("..Shinies..")")
-		sleeph(24)
+		print("SHINY FOUND")
+		WaitToAttack()
+    sleep(500)
+    Battle.DoItemInteraction(0,0,"ITEM",5001,0,-1) --Master Ball
+    sleep(1500)
+    KeyTyped("A")
+    sleep(1500)
+    WaitToAttack()
+    if(not Trainer.IsInBattle()) then
+        Shinies = Shinies + 1
+        print("Captured Shiny!")
+        return
+    end
 	end
 	if(Battle.Active.GetPokemonID(1, 0) ~= 235 or Battle.GetBattleType() ~= "SINGLE_BATTLE") then
 		while (Trainer.IsInBattle()) do
@@ -55,8 +65,10 @@ function DoBattle()
 	else
 		while (Trainer.IsInBattle()) do
 			WaitToAttack()
+      sleep(500)
 			Battle.DoAction(0,0,"SKILL",6,0)
-			PayDayPP = PayDayPP - 1
+      sleep(500)
+			PayDayPP = Battle.Moves.GetPP(0,0,0)
   		Encounters = Encounters + 1
 			while(Trainer.IsInBattle()) do
 				sleep(1000)
@@ -70,6 +82,7 @@ function DoBattle()
       --print("       "..(LeppaBerriesTotal-LeppaBerriesUsed).." Berries Remaining")
       --print("       "..CycleCount.." Cycle(s)")
       --print("       "..ResetCount.." Reset(s)")
+      --print("       "..Shinies.." Shinies")
       print(" ==================================================")
 			return
 		end
@@ -103,7 +116,6 @@ function Recovery() --TWO
 		KeyTyped("A")
 		sleep(1000)
 		KeyTyped("A")
-		PayDayPP = PayDayPP + 10
 		LeppaBerriesUsed = LeppaBerriesUsed + 1
 		sleep(2000)
 	end
