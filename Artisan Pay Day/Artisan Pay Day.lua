@@ -63,26 +63,25 @@ function DoBattle()
 			end
 		end
 	else
+    Encounters = Encounters + 1
 		while (Trainer.IsInBattle()) do
 			WaitToAttack()
-      sleep(500)
+      sleep(1000)
 			Battle.DoAction(0,0,"SKILL",6,0)
-      sleep(500)
 			PayDayPP = Battle.Moves.GetPP(0,0,0)
-  		Encounters = Encounters + 1
 			while(Trainer.IsInBattle()) do
 				sleep(1000)
 			end
 		end
     if (not Trainer.IsInBattle()) then
 		  print("       "..PayDayPP.." PP")
-      print("       "..Encounters.." Encounter(s)")
       print("       $"..(Reward*Encounters))
+      print("       "..Encounters.." Encounter(s)")
       --For some reason the below prints break the script; you can put these under other functions if you wish to use them still
       --print("       "..(LeppaBerriesTotal-LeppaBerriesUsed).." Berries Remaining")
       --print("       "..CycleCount.." Cycle(s)")
       --print("       "..ResetCount.." Reset(s)")
-      --print("       "..Shinies.." Shinies")
+      print("       "..Shinies.." Shinies")
       print(" ==================================================")
 			return
 		end
