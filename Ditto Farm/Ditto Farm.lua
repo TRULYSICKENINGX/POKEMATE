@@ -9,6 +9,8 @@ BallsUsed = 0
 Cycles = 99 --one cycle yields around 25 Dittos
 DittoGoal = 999 --set this, script ends after this many Dittos are caught
 TotalBalls = 150 --set this, 10 lower than your true ball count
+SlowMode = 0 -- increas this value if ur pc is a little bit slower
+SlowModeDelay = 500 * SlowMode
 
 function CheckPosition(X, Y)
 	ErrorCorrection(X, Y)
@@ -60,7 +62,7 @@ end
 
 function GoOutOfPC()
 	Trainer.MoveDown(true, 6)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	while(Trainer.IsMovementBlocked()) do
 		sleep(3000)
 	end
@@ -70,21 +72,21 @@ end
 function Regenerate()
 	CheckPosition(7,4)
 	Trainer.TalkToNPC()
-	sleep(1000)
+	sleep(1000 + SlowModeDelay)
 	KeyTyped("a")
-	sleep(1000)
+	sleep(1000 + SlowModeDelay)
 	KeyTyped("a")
-	sleep(1000)
+	sleep(1000 + SlowModeDelay)
 	KeyTyped("a")
-	sleep(1000)
+	sleep(1000 + SlowModeDelay)
 	KeyTyped("a")
-	sleep(1000)
+	sleep(1000 + SlowModeDelay)
 	KeyTyped("a")
-	sleep(1000)
+	sleep(1000 + SlowModeDelay)
 	KeyTyped("a")
-	sleep(1000)
+	sleep(1000 + SlowModeDelay)
 	KeyTyped("a")
-	sleep(500)
+	sleep(500 + SlowModeDelay)
 	FalseSwipePP = 48
 	AssistPP = 32
 	GoOutOfPC();
@@ -99,10 +101,10 @@ function GoToDitto1() --all methods currently use the same path, you can change 
 	Trainer.MoveLeft(true, 19)
 	CheckPosition(29, 9)
 	Trainer.MoveUp(true, 5)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(4, 7)
 	Trainer.MoveUp(true, 6)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(6, 25)
 	Trainer.MoveUp(true, 19)
 	CheckPosition(6, 6)
@@ -113,7 +115,7 @@ function GoToDitto1() --all methods currently use the same path, you can change 
 	Trainer.MoveRight(true, 2)
 	CheckPosition(6, 4)
 	Trainer.MoveUp(true, 3)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(10, 12)
 	Trainer.MoveUp(true, 2)
 end
@@ -125,10 +127,10 @@ function GoToDitto2()
 	Trainer.MoveLeft(true, 19)
 	CheckPosition(29, 9)
 	Trainer.MoveUp(true, 5)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(4, 7)
 	Trainer.MoveUp(true, 6)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(6, 25)
 	Trainer.MoveUp(true, 19)
 	CheckPosition(6, 6)
@@ -139,7 +141,7 @@ function GoToDitto2()
 	Trainer.MoveRight(true, 2)
 	CheckPosition(6, 4)
 	Trainer.MoveUp(true, 3)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(10, 12)
 	Trainer.MoveUp(true, 2)
 end
@@ -151,10 +153,10 @@ function GoToDitto3()
 	Trainer.MoveLeft(true, 19)
 	CheckPosition(29, 9)
 	Trainer.MoveUp(true, 5)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(4, 7)
 	Trainer.MoveUp(true, 6)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(6, 25)
 	Trainer.MoveUp(true, 19)
 	CheckPosition(6, 6)
@@ -165,14 +167,14 @@ function GoToDitto3()
 	Trainer.MoveRight(true, 2)
 	CheckPosition(6, 4)
 	Trainer.MoveUp(true, 3)
-	sleep(3000)
+	sleep(3000 + SlowModeDelay)
 	CheckPosition(10, 12)
 	Trainer.MoveUp(true, 2)
 end
 
 
 function GoToDitto()
-	sleep(2000)
+	sleep(2000 + SlowModeDelay)
 	KeyTyped(BikeHotkey)
 	choice = random(1,3)
 	if(choice == 1) then
@@ -201,6 +203,7 @@ function DoBattle()
 	if(Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
 		Shinies = Shinies + 1
 		print("SHINY FOUND ("..Shinies..")")
+		MessageBox("SHINY ALERT", "The Bot found a shiny ^^")
 		sleeph(24)
 	end
 	if(Battle.Active.GetPokemonID(1, 0) ~= 132) then
@@ -220,24 +223,24 @@ function DoBattle()
 		while(count <= 4) do
 			if(count == 0) then --swap to Smeargle
 				Battle.DoAction(0,0,"SWAP",1,0)
-				sleep(1000)
+				sleep(1000 + SlowModeDelay)
 			end
 			if(count == 1) then --use FalseSwipe
 				Battle.DoAction(0,0,"SKILL",206,0)
 				FalseSwipePP = FalseSwipePP - 1
-				sleep(1000)
+				sleep(1000 + SlowModeDelay)
 			end
 			if(count == 2) then --use Assist
 				Battle.DoAction(0,0,"SKILL",274,0)
 				AssistPP = AssistPP - 1
-				sleep(1000)
+				sleep(1000 + SlowModeDelay)
 			end
 			if(count == 3) then --use Ball
 				--Battle.DoItemInteraction(0,0,"ITEM",5002,0,-1) UltraBall
 				Battle.DoItemInteraction(0,0,"ITEM",5009,0,-1) --RepeatBall
 				ThrownBalls = ThrownBalls + 1
 				BallsUsed = BallsUsed + 1
-				sleep(1000)
+				sleep(1000 + SlowModeDelay)
 			end
 			if(count == 4) then --use Ball Two
 				--Battle.DoItemInteraction(0,0,"ITEM",5002,0,-1) UltraBall
@@ -245,7 +248,7 @@ function DoBattle()
 				ThrownBalls = ThrownBalls + 1
 				BallsUsed = BallsUsed + 1
 				count = 1
-				sleep(1000)
+				sleep(1000 + SlowModeDelay)
 			end
             count = count + 1
             WaitToAttack()
