@@ -15,8 +15,8 @@ SlowModeDelay = 500 * SlowMode
 function CheckPosition(X, Y)
 	ErrorCorrection(X, Y)
 	if(not (Trainer.GetX() == X and Trainer.GetY() == Y)) then
-		print("Incorrect Position, Hard Resetting...")
-		HardReset()
+		print("Incorrect Position, Script Stopped!")
+		stop()
 	end
 end
 
