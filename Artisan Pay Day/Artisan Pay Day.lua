@@ -4,13 +4,16 @@ PayDayPP = 0 --set by script, don't need to set anymore
 Reward = 450 --estimate, given Smeargles are level 40-50 in Artisan Cave
 Encounters = 0 --roughly 130 an hour
 CycleCount = 0
-Cycles = 32 --one cycle is 30 encounters, 4 cycles per hour, relogs after set Cycles
-LeppaBerriesUsed = 0 --roughly 12 berries an hour
-LeppaBerriesTotal = 450 --set this (make sure your PayDay is full PP before starting, this will end 5 before your actual berry count to avoid bugs)
+StartMoney = 0 --used for calculating per battle payout
+EndMoney = 0 --used for calculating per battle payout
+MoneyX = Trainer.GetMoney() --used for calculating total runtime profit
+Cycles = 15 --one cycle is roughly 30 encounters, relogs after set Cycles
 SlowMode = 0 -- increas this value if ur pc is a little bit slower
 SlowModeDelay = 500 * SlowMode
+LeppaBerriesUsed = 0 --roughly 12 berries an hour
+LeppaBerriesTotal = 2222 --set this (make sure your PayDay is full PP before starting, this will end 5 before your actual berry count to avoid bugs)
 
--- U will need Masterball to aut catch shinys
+--you need a masterball to catch shinies
 
 function WaitToAttack()
     while (not Battle.CanAttack() and Trainer.IsInBattle()) do
@@ -40,6 +43,7 @@ function SearchBattle()
 end
 
 function DoBattle()
+    StartMoney = Trainer.GetMoney()
     if (Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
         print("SHINY FOUND")
         MessageBox("SHINY ALERT", "The Bot found a shiny ^^")
@@ -76,14 +80,13 @@ function DoBattle()
                 sleep(1000)
             end
         end
+        EndMoney = Trainer.GetMoney()
         if (not Trainer.IsInBattle()) then
             print("       " .. PayDayPP .. " PP")
-            print("       $" .. (Reward * Encounters))
+            print("       $" .. (EndMoney - MoneyX) .. " Earned")
             print("       " .. Encounters .. " Encounter(s)")
             --For some reason the below prints break the script; you can put these under other functions if you wish to use them still
-            --print("       "..(LeppaBerriesTotal-LeppaBerriesUsed).." Berries Remaining")
-            --print("       "..CycleCount.." Cycle(s)")
-            --print("       "..ResetCount.." Reset(s)")
+            print("       $" .. (EndMoney - StartMoney) .. " Last Encounter")
             print("       " .. Shinies .. " Shinies")
             print(" ==================================================")
             return
@@ -121,6 +124,28 @@ function Recovery() --TWO
     end
 end
 
+function CheckForWildEncounter()
+    if (Trainer.IsInBattle()) then
+        print("Wild Encounter")
+        if (Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
+            print("SINGLE SHINY FOUND")
+            CatchSingleShiny()
+            sleep(2000 + SlowModeDelay)
+            return
+        end
+        LastPokemonHealth = Battle.Active.GetPokemonHealth(0, CurrentPokemon)
+        if (LastPokemonHealth == -1) then
+            CurrentPokemon = CurrentPokemon + 1
+            WaitToAttack()
+            Battle.DoAction(0, 0, "SWAP", CurrentPokemon, 0)
+            sleep(1000 + SlowModeDelay)
+        end
+        WaitToAttack()
+        Battle.DoAction(0, 0, "RUN", 0, 0)
+        sleep(2000 + SlowModeDelay)
+    end
+end
+
 function Main()
     for i = 1, Cycles do
         print("Searching...")
@@ -143,7 +168,6 @@ function Main()
         CheckForWildEncounter()
     end
     sleep(5000 + SlowModeDelay)
-    ResetCount = ResetCount + 1
     Main()
 end
 
