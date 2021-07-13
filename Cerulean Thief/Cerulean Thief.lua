@@ -1,7 +1,7 @@
 LastPokemonHealth = 12
 CurrentPokemon = 0
 Encounters = -1
-Count = 0 --For Shiny Encounters
+Count = 0 -- For Shiny Encounters
 ResetCount = 0
 MankeyCount = 0
 MeowthCount = 0
@@ -9,14 +9,15 @@ FixBushCount = 0
 CycleCount = 0
 ItemCount = 0
 ThiefPP = 40
-SweetScentPP = 32
-PokemonID = 217669031 -- Get your PokemonID by changing your Pokemon's items in Debugging Mode
-PokemonName = "MEOWTHEATER69" -- Set this to your Pokemon's name, nickname if applicable (ex. my Shuppet is named MEOWTHEATER69)
+SweetScentPP = 32 -- Use 3 PP Up to get max efficiency
+PokemonID = 200000000 -- Get your PokemonID by changing your Pokemon's items in Debugging Mode
+PokemonName = "Shuppet" -- Set this to your Pokemon's name, nickname if applicable (ex. my Shuppet is named MEOWTHEATER69)
 AbilityName = "Frisk"
-SweetScentHotkey = "h9" -- Put Sweet Scent on Hotkey 9
+CutHotkey = "h7" -- Put Cut on Hotkey 7
 TeleportHotkey = "h8" -- Put Teleport on Hotkey 8
+SweetScentHotkey = "h9" -- Put Sweet Scent on Hotkey 9
 Cycles = 30 -- Cycles before the script relogs you to potentially help avoid detection, 10 Cycles is approximately 30 minutes (don't set this value too high)
-SlowMode = 0 -- increas this value if ur pc is a little bit slower
+SlowMode = 0 -- Increase this value if ur pc is a little bit slower
 SlowModeDelay = 500 * SlowMode
 
 -- Make sure to cut the bush once before starting (the script will perform a hard reset anyways if you get don't, but this bypasses one relog)
@@ -194,14 +195,8 @@ function GoToBush5()
 end
 
 function CutBush()
-    Trainer.TalkToNPC()
-    sleep(1000 + SlowModeDelay)
-    KeyTyped("a")
-    sleep(1000 + SlowModeDelay)
-    KeyTyped("a")
-    sleep(1000 + SlowModeDelay)
-    KeyTyped("a")
-    sleep(2000 + SlowModeDelay)
+    KeyTyped(CutHotkey)
+    sleep(2500 + SlowModeDelay)
 end
 
 function GoToRoute5()
@@ -437,9 +432,13 @@ function DoBattle()
             end
             count = count + 1
             WaitToAttack()
-            if (Battle.Active.HasItem(0, 0)) then
-                count = 4
-            end
+			if(Trainer.IsInBattle()) then
+				if (Battle.Active.HasItem(0, 0)) then
+					count = 4
+				end
+			else
+				count = 4
+			end
         end
         if (LastPokemonHealth == -1) then
             CurrentPokemon = CurrentPokemon + 1
