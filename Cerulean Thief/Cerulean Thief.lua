@@ -2,7 +2,6 @@ LastPokemonHealth = 12
 CurrentPokemon = 0
 Encounters = -1
 Count = 0 -- For Shiny Encounters
-ShinyCount = 0
 ResetCount = 0
 MankeyCount = 0
 MeowthCount = 0
@@ -234,13 +233,12 @@ function WaitToAttack()
 end
 
 function CatchHordeShiny() --17, 33, 49
-	ShinyCount = ShinyCount + 1
     print(" ========== HORDE SHINY FOUND ==========")
     if (Battle.Active.GetPokemonRarity(1, 1) == "SHINY") then
         count = 0
         WaitToAttack()
         while (count <= 5) do
-            if (count == 0) then --swap to sixth slot Pokemon (needs damage, starmie)
+            if (count == 0) then --swap to fifth slot Pokemon (needs damage, starmie)
                 Battle.DoAction(0, 0, "SWAP", 5, 0)
                 sleep(1000 + SlowModeDelay)
             end
@@ -350,7 +348,6 @@ function CatchHordeShiny() --17, 33, 49
 end
 
 function CatchSingleShiny()
-	ShinyCount = ShinyCount + 1
     print(" ========== Single SHINY FOUND ==========")
     if (Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
         count = 0
@@ -380,11 +377,14 @@ function CatchSingleShiny()
 end
 
 function DoBattle()
-    if (Battle.Active.GetPokemonRarity(1, 1) == "SHINY" or Battle.Active.GetPokemonRarity(1, 2) == "SHINY" or Battle.Active.GetPokemonRarity(1, 3) == "SHINY") then
-		print("HORDE SHINY FOUND")
-		CatchHordeShiny()
-		sleep(2000 + SlowModeDelay)
-		return
+    if
+        (Battle.Active.GetPokemonRarity(1, 1) == "SHINY" or Battle.Active.GetPokemonRarity(1, 2) == "SHINY" or
+            Battle.Active.GetPokemonRarity(1, 3) == "SHINY")
+     then
+        print("HORDE SHINY FOUND")
+        CatchHordeShiny()
+        sleep(2000 + SlowModeDelay)
+        return
     end
     if (Battle.Active.GetPokemonID(1, 1) == 56) then
         print(" ========== Mankey Horde ==========")
@@ -492,8 +492,7 @@ function UseSweetScent()
         "\n        Mankeys : " 	.. MankeyCount 	..
         "        Meowths : " 		.. MeowthCount 	..
         "\n        Cycles : " 	.. CycleCount 	.. 
-        "        Resets : " 		.. ResetCount 	..
-		"        ShinyEnc : " 		.. ShinyCount
+        "        Resets : " 		.. ResetCount
     )
     sleep(5000 + SlowModeDelay)
 end
