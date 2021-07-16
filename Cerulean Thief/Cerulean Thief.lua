@@ -1,3 +1,4 @@
+ShinyManual = 1
 LastPokemonHealth = 12
 CurrentPokemon = 0
 Encounters = -1
@@ -234,7 +235,6 @@ function WaitToAttack()
 end
 
 function CatchHordeShiny() --17, 33, 49
-	ShinyCount = ShinyCount + 1
     print(" ========== HORDE SHINY FOUND ==========")
     if (Battle.Active.GetPokemonRarity(1, 1) == "SHINY") then
         count = 0
@@ -350,7 +350,6 @@ function CatchHordeShiny() --17, 33, 49
 end
 
 function CatchSingleShiny()
-	ShinyCount = ShinyCount + 1
     print(" ========== Single SHINY FOUND ==========")
     if (Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
         count = 0
@@ -381,7 +380,11 @@ end
 
 function DoBattle()
     if (Battle.Active.GetPokemonRarity(1, 1) == "SHINY" or Battle.Active.GetPokemonRarity(1, 2) == "SHINY" or Battle.Active.GetPokemonRarity(1, 3) == "SHINY") then
+		ShinyCount = ShinyCount + 1
 		print("HORDE SHINY FOUND")
+		if ShinyManual == 1 then
+			ShinyAlert()
+		end
 		CatchHordeShiny()
 		sleep(2000 + SlowModeDelay)
 		return
@@ -458,7 +461,11 @@ function CheckForWildEncounter()
     if (Trainer.IsInBattle()) then
         print("Wild Encounter")
         if (Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
+			ShinyCount = ShinyCount + 1
             print("SINGLE SHINY FOUND")
+			if ShinyManual == 1 then
+				ShinyAlert()
+			end
             CatchSingleShiny()
             sleep(2000 + SlowModeDelay)
             return
@@ -513,6 +520,11 @@ function FightRoutine()
         end
         sleep(500 + SlowModeDelay)
     end
+end
+
+function ShinyAlert()
+	MessageBox("SHINY ALERT", "The Bot found a shiny ^^")
+	sleeph(24)
 end
 
 function Main()
