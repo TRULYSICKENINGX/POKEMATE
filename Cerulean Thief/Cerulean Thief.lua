@@ -1,3 +1,4 @@
+InitialCycle = 0
 ShinyManual = 0
 LastPokemonHealth = 12
 CurrentPokemon = 0
@@ -43,26 +44,12 @@ function RelogReset()
     end
     sleep(5000 + SlowModeDelay)
     ResetCount = ResetCount + 1
+    InitialCycle = 0
     print("Success... " .. ResetCount .. " Relog(s)")
-end
-
-function FixBush()
-    print("Fixing Bush...")
-    GoOutOfPC()
-    sleep(500 + SlowModeDelay)
-    GoToBush1()
-    sleep(500 + SlowModeDelay)
-    CutBush()
-    sleep(5000 + SlowModeDelay)
-    GoBackToPC()
-    sleep(1500 + SlowModeDelay)
-    FixBushCount = FixBushCount + 1
-    print("Success... " .. FixBushCount .. " Fixed")
 end
 
 function HardReset()
     RelogReset()
-    FixBush()
     Main()
 end
 
@@ -196,6 +183,12 @@ end
 
 function CutBush()
     KeyTyped(CutHotkey)
+    if InitialCycle == 0 then
+        sleep(5000 + SlowModeDelay)
+        FixBushCount = FixBushCount + 1
+        print("Success... " .. FixBushCount .. " Fixed")
+        InitialCycle = InitialCycle + 1
+    end
     sleep(2500 + SlowModeDelay)
 end
 
@@ -505,7 +498,6 @@ end
 function FightRoutine()
     CheckForWildEncounter()
     while (true) do
-        Trainer.DoItemChange(PokemonID, -1, "PARTY")
         if (not (Trainer.GetX() == 26 and Trainer.GetY() == 5) or not (Trainer.GetMapID() == 3) or not (Trainer.GetCityName() == "ROUTE 5")) then
             print("Got teleported, GM Maybe?")
             MessageBox("Got teleported, GM Maybe?")
@@ -518,6 +510,7 @@ function FightRoutine()
             DoBattle()
         end
         sleep(1000 + SlowModeDelay)
+        Trainer.DoItemChange(PokemonID, -1, "PARTY")
         if (SweetScentPP <= 4 or not (CurrentPokemon == 0)) then
             break
         end
