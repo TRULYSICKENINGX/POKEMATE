@@ -1,4 +1,4 @@
-ShinyManual = 1
+ShinyManual = 0
 LastPokemonHealth = 12
 CurrentPokemon = 0
 Encounters = -1
@@ -10,7 +10,6 @@ MeowthCount = 0
 FixBushCount = 0
 CycleCount = 0
 ItemCount = 0
-ThiefPP = 40
 SweetScentPP = 32 -- Use 3 PP Up to get max efficiency
 PokemonID = 200000000 -- Get your PokemonID by changing your Pokemon's items in Debugging Mode
 PokemonName = "Shuppet" -- Set this to your Pokemon's name, nickname if applicable (ex. my Shuppet is named MEOWTHEATER69)
@@ -136,7 +135,6 @@ function Regenerate()
     KeyTyped("a")
     sleep(1500 + SlowModeDelay)
     KeyTyped("a")
-    ThiefPP = 40
     SweetScentPP = 32
     CurrentPokemon = 0
     GoOutOfPC()
@@ -451,7 +449,6 @@ function DoBattle()
         sleep(500)
         WaitToAttack()
         Battle.DoAction(0, 0, "RUN", 0, 0)
-        ThiefPP = ThiefPP - 3
         ItemCount = ItemCount + 1
         sleep(3000 + SlowModeDelay)
     end
@@ -508,14 +505,20 @@ end
 function FightRoutine()
     CheckForWildEncounter()
     while (true) do
+        Trainer.DoItemChange(PokemonID, -1, "PARTY")
+        if (not (Trainer.GetX() == 26 and Trainer.GetY() == 5) or not (Trainer.GetMapID() == 3) or not (Trainer.GetCityName() == "ROUTE 5")) then
+            print("Got teleported, GM Maybe?")
+            MessageBox("Got teleported, GM Maybe?")
+            sleep(random(5000,10000))
+            break
+        end
         UseSweetScent()
         sleep(500 + SlowModeDelay)
         if (Trainer.IsInBattle()) then
             DoBattle()
         end
         sleep(1000 + SlowModeDelay)
-        Trainer.DoItemChange(PokemonID, -1, "PARTY")
-        if (SweetScentPP <= 5 or not (CurrentPokemon == 0) or ThiefPP <= 0) then
+        if (SweetScentPP <= 4 or not (CurrentPokemon == 0)) then
             break
         end
         sleep(500 + SlowModeDelay)
