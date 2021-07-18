@@ -22,8 +22,10 @@ Cycles = 30 -- Cycles before the script relogs you to potentially help avoid det
 SlowMode = 0 -- Increase this value if ur pc is a little bit slower
 SlowModeDelay = 500 * SlowMode
 
--- Make sure to cut the bush once before starting (the script will perform a hard reset anyways if you get don't, but this bypasses one relog)
--- Also u will need some UltraBall s for Shiny catching
+-- You will need a Shuppet/Banette in 1st party slot with with Thief move and Frisk Ability.
+-- Also, for Shiny automatic catching (ShinyManual = 0) you will need some UltraBalls and:
+-- PKMN with False Swipe move on 2nd party slot (Smeargle?) 
+-- PKMN with Thunderbolt move on 6th party slot 6 (Starmie?).
 
 function RelogReset()
     print("Resetting...")
@@ -231,7 +233,7 @@ function CatchHordeShiny() --17, 33, 49
         count = 0
         WaitToAttack()
         while (count <= 5) do
-            if (count == 0) then --swap to sixth slot Pokemon (needs damage, starmie)
+            if (count == 0) then --swap to sixth slot Pokemon (needs damage, Starmie)
                 Battle.DoAction(0, 0, "SWAP", 5, 0)
                 sleep(1000 + SlowModeDelay)
             end
@@ -268,7 +270,7 @@ function CatchHordeShiny() --17, 33, 49
         count = 0
         WaitToAttack()
         while (count <= 5) do
-            if (count == 0) then --swap to sixth slot Pokemon (needs damage, starmie)
+            if (count == 0) then --swap to sixth slot Pokemon (needs damage, Starmie)
                 Battle.DoAction(0, 0, "SWAP", 5, 0)
                 sleep(1000 + SlowModeDelay)
             end
@@ -305,7 +307,7 @@ function CatchHordeShiny() --17, 33, 49
         count = 0
         WaitToAttack()
         while (count <= 5) do
-            if (count == 0) then --swap to sixth slot Pokemon (needs damage, starmie)
+            if (count == 0) then --swap to sixth slot Pokemon (needs damage, Starmie)
                 Battle.DoAction(0, 0, "SWAP", 5, 0)
                 sleep(1000 + SlowModeDelay)
             end
