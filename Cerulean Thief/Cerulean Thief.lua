@@ -1,3 +1,5 @@
+InitialCycle = 0
+ShinyManual = 0
 LastPokemonHealth = 12
 CurrentPokemon = 0
 Encounters = -1
@@ -9,7 +11,6 @@ MeowthCount = 0
 FixBushCount = 0
 CycleCount = 0
 ItemCount = 0
-ThiefPP = 40
 SweetScentPP = 32 -- Use 3 PP Up to get max efficiency
 PokemonID = 200000000 -- Get your PokemonID by changing your Pokemon's items in Debugging Mode
 PokemonName = "Shuppet" -- Set this to your Pokemon's name, nickname if applicable (ex. my Shuppet is named MEOWTHEATER69)
@@ -21,8 +22,10 @@ Cycles = 30 -- Cycles before the script relogs you to potentially help avoid det
 SlowMode = 0 -- Increase this value if ur pc is a little bit slower
 SlowModeDelay = 500 * SlowMode
 
--- Make sure to cut the bush once before starting (the script will perform a hard reset anyways if you get don't, but this bypasses one relog)
--- Also u will need some UltraBall s for Shiny catching
+-- You will need a Shuppet/Banette in 1st party slot with with Thief move and Frisk Ability.
+-- Also, for Shiny automatic catching (ShinyManual = 0) you will need some UltraBalls and:
+-- PKMN with False Swipe move on 2nd party slot (Smeargle?) 
+-- PKMN with Thunderbolt move on 6th party slot (Starmie?).
 
 function RelogReset()
     print("Resetting...")
@@ -43,26 +46,12 @@ function RelogReset()
     end
     sleep(5000 + SlowModeDelay)
     ResetCount = ResetCount + 1
+    InitialCycle = 0
     print("Success... " .. ResetCount .. " Relog(s)")
-end
-
-function FixBush()
-    print("Fixing Bush...")
-    GoOutOfPC()
-    sleep(500 + SlowModeDelay)
-    GoToBush1()
-    sleep(500 + SlowModeDelay)
-    CutBush()
-    sleep(5000 + SlowModeDelay)
-    GoBackToPC()
-    sleep(1500 + SlowModeDelay)
-    FixBushCount = FixBushCount + 1
-    print("Success... " .. FixBushCount .. " Fixed")
 end
 
 function HardReset()
     RelogReset()
-    FixBush()
     Main()
 end
 
@@ -135,7 +124,6 @@ function Regenerate()
     KeyTyped("a")
     sleep(1500 + SlowModeDelay)
     KeyTyped("a")
-    ThiefPP = 40
     SweetScentPP = 32
     CurrentPokemon = 0
     GoOutOfPC()
@@ -197,6 +185,12 @@ end
 
 function CutBush()
     KeyTyped(CutHotkey)
+    if InitialCycle == 0 then
+        sleep(5000 + SlowModeDelay)
+        FixBushCount = FixBushCount + 1
+        print("Success... " .. FixBushCount .. " Fixed")
+        InitialCycle = InitialCycle + 1
+    end
     sleep(2500 + SlowModeDelay)
 end
 
@@ -234,13 +228,12 @@ function WaitToAttack()
 end
 
 function CatchHordeShiny() --17, 33, 49
-	ShinyCount = ShinyCount + 1
     print(" ========== HORDE SHINY FOUND ==========")
     if (Battle.Active.GetPokemonRarity(1, 1) == "SHINY") then
         count = 0
         WaitToAttack()
         while (count <= 5) do
-            if (count == 0) then --swap to sixth slot Pokemon (needs damage, starmie)
+            if (count == 0) then --swap to sixth slot Pokemon (needs damage, Starmie)
                 Battle.DoAction(0, 0, "SWAP", 5, 0)
                 sleep(1000 + SlowModeDelay)
             end
@@ -277,7 +270,7 @@ function CatchHordeShiny() --17, 33, 49
         count = 0
         WaitToAttack()
         while (count <= 5) do
-            if (count == 0) then --swap to sixth slot Pokemon (needs damage, starmie)
+            if (count == 0) then --swap to sixth slot Pokemon (needs damage, Starmie)
                 Battle.DoAction(0, 0, "SWAP", 5, 0)
                 sleep(1000 + SlowModeDelay)
             end
@@ -314,7 +307,7 @@ function CatchHordeShiny() --17, 33, 49
         count = 0
         WaitToAttack()
         while (count <= 5) do
-            if (count == 0) then --swap to sixth slot Pokemon (needs damage, starmie)
+            if (count == 0) then --swap to sixth slot Pokemon (needs damage, Starmie)
                 Battle.DoAction(0, 0, "SWAP", 5, 0)
                 sleep(1000 + SlowModeDelay)
             end
@@ -350,7 +343,6 @@ function CatchHordeShiny() --17, 33, 49
 end
 
 function CatchSingleShiny()
-	ShinyCount = ShinyCount + 1
     print(" ========== Single SHINY FOUND ==========")
     if (Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
         count = 0
@@ -381,7 +373,11 @@ end
 
 function DoBattle()
     if (Battle.Active.GetPokemonRarity(1, 1) == "SHINY" or Battle.Active.GetPokemonRarity(1, 2) == "SHINY" or Battle.Active.GetPokemonRarity(1, 3) == "SHINY") then
+		ShinyCount = ShinyCount + 1
 		print("HORDE SHINY FOUND")
+		if ShinyManual == 1 then
+			ShinyAlert()
+		end
 		CatchHordeShiny()
 		sleep(2000 + SlowModeDelay)
 		return
@@ -448,7 +444,6 @@ function DoBattle()
         sleep(500)
         WaitToAttack()
         Battle.DoAction(0, 0, "RUN", 0, 0)
-        ThiefPP = ThiefPP - 3
         ItemCount = ItemCount + 1
         sleep(3000 + SlowModeDelay)
     end
@@ -458,7 +453,11 @@ function CheckForWildEncounter()
     if (Trainer.IsInBattle()) then
         print("Wild Encounter")
         if (Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
+			ShinyCount = ShinyCount + 1
             print("SINGLE SHINY FOUND")
+			if ShinyManual == 1 then
+				ShinyAlert()
+			end
             CatchSingleShiny()
             sleep(2000 + SlowModeDelay)
             return
@@ -501,6 +500,12 @@ end
 function FightRoutine()
     CheckForWildEncounter()
     while (true) do
+        if (not (Trainer.GetX() == 26 and Trainer.GetY() == 5) or not (Trainer.GetMapID() == 3) or not (Trainer.GetCityName() == "ROUTE 5")) then
+            print("Got teleported, GM Maybe?")
+            MessageBox("Got teleported, GM Maybe?")
+            sleep(random(5000,10000))
+            break
+        end
         UseSweetScent()
         sleep(500 + SlowModeDelay)
         if (Trainer.IsInBattle()) then
@@ -508,11 +513,16 @@ function FightRoutine()
         end
         sleep(1000 + SlowModeDelay)
         Trainer.DoItemChange(PokemonID, -1, "PARTY")
-        if (SweetScentPP <= 5 or not (CurrentPokemon == 0) or ThiefPP <= 0) then
+        if (SweetScentPP <= 4 or not (CurrentPokemon == 0)) then
             break
         end
         sleep(500 + SlowModeDelay)
     end
+end
+
+function ShinyAlert()
+	MessageBox("SHINY ALERT", "The Bot found a shiny ^^")
+	sleeph(24)
 end
 
 function Main()

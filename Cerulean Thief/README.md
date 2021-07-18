@@ -1,5 +1,5 @@
 # Intro
-This is very similar to Fiereu's initial script. The only thing you need is access to Cerulean City in Kanto, one Shuppet, Sweet Scent, and Teleport (Pokemon or Ocarina).
+This is very similar to Fiereu's initial script. The only thing you need is access to Cerulean City in Kanto, one Shuppet, Sweet Scent, Cut and Teleport (Pokemon or Ocarina).
 
 It uses a Shuppet with Frisk and Thief to farm Meowth's near Cerulean City, and is designed to run for long durations (I've hit thousands of encounters with no issues):
 
@@ -12,10 +12,10 @@ This is RNG dependent, but I estimate about 90k an hour.
 
 # Setup
 1. Low Level Shupet (I prefer lv 1) with Frisk Ability and Thief move
-2. Teleport on Hotkey 8
-3. Sweet Scent on Hotkey 9
+2. Cut on Hotkey 7
+3. Teleport on Hotkey 8
+4. Sweet Scent on Hotkey 9
 
 # Instructions
-1. Set values in the beginning of the script (PP, PokemonID, Pokemon Name)
-2. MAKE SURE YOU CUT THE TREE ONCE BEFORE STARTING THE SCRIPT (the first time you cut, a longer animation with the Pokemon will play)
-3. Go back to the PC, face the nurse, and start!
+1. Set values in the beginning of the script (SweetScentPP, PokemonID, PokemonName)
+2. Go back to the PC, face the nurse, and start!
