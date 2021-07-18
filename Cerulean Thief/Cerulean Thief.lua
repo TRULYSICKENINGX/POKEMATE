@@ -24,8 +24,8 @@ SlowModeDelay = 500 * SlowMode
 
 -- You will need a Shuppet/Banette in 1st party slot with with Thief move and Frisk Ability.
 -- Also, for Shiny automatic catching (ShinyManual = 0) you will need some UltraBalls and:
--- PKMN with False Swipe move on 2nd party slot (Smeargle?) 
--- PKMN with Thunderbolt move on 6th party slot (Starmie?).
+-- PKMN with False Swipe move on 2nd party slot (e.g. Smeargle) 
+-- PKMN with Thunderbolt move on 6th party slot (e.g. Starmie)
 
 function RelogReset()
     print("Resetting...")
@@ -503,16 +503,19 @@ function FightRoutine()
         if (not (Trainer.GetX() == 26 and Trainer.GetY() == 5) or not (Trainer.GetMapID() == 3) or not (Trainer.GetCityName() == "ROUTE 5")) then
             print("Got teleported, GM Maybe?")
             MessageBox("Got teleported, GM Maybe?")
-            sleep(random(5000,10000))
+            sleep(random(4000,8000))
+            GoBackToPC()	
+            Logout()
+            sleeph(24)
             break
         end
+        Trainer.DoItemChange(PokemonID, -1, "PARTY")
         UseSweetScent()
         sleep(500 + SlowModeDelay)
         if (Trainer.IsInBattle()) then
             DoBattle()
         end
         sleep(1000 + SlowModeDelay)
-        Trainer.DoItemChange(PokemonID, -1, "PARTY")
         if (SweetScentPP <= 4 or not (CurrentPokemon == 0)) then
             break
         end
