@@ -25,7 +25,7 @@ SlowModeDelay = 500 * SlowMode
 -- You will need a Shuppet/Banette in 1st party slot with with Thief move and Frisk Ability.
 -- Also, for Shiny automatic catching (ShinyManual = 0) you will need some UltraBalls and:
 -- PKMN with False Swipe move on 2nd party slot (Smeargle?) 
--- PKMN with Thunderbolt move on 6th party slot 6 (Starmie?).
+-- PKMN with Thunderbolt move on 6th party slot (Starmie?).
 
 function RelogReset()
     print("Resetting...")
