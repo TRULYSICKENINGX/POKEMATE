@@ -2,7 +2,7 @@ InitialCycle = 0
 ShinyManual = 0
 LastPokemonHealth = 12
 CurrentPokemon = 0
-Encounters = -1
+Encounters = 0
 Count = 0 -- For Shiny Encounters
 ShinyCount = 0
 ResetCount = 0
@@ -102,6 +102,7 @@ function ErrorCorrection(X, Y)
 end
 
 function GoOutOfPC()
+    print("Going out of PC...")
     Trainer.MoveDown(true, 6)
     sleep(2000 + SlowModeDelay)
     while (Trainer.IsMovementBlocked()) do
@@ -185,6 +186,7 @@ function GoToBush5()
 end
 
 function CutBush()
+    print("Cutting bush...")
     KeyTyped(CutHotkey)
     if InitialCycle == 0 then
         sleep(5000 + SlowModeDelay)
@@ -196,6 +198,7 @@ function CutBush()
 end
 
 function GoToRoute5()
+    print("Going to bush...")
     CheckPosition(22, 20)
     choice = random(1, 5)
     if (choice == 1) then
@@ -477,24 +480,17 @@ function CheckForWildEncounter()
 end
 
 function GoBackToPC()
+    print("Going back to PC...")
     sleep(500)
     KeyTyped(TeleportHotkey)
     sleep(5000 + SlowModeDelay)
 end
 
 function UseSweetScent()
+    print("Using Sweet Scent...")
     KeyTyped(SweetScentHotkey)
     SweetScentPP = SweetScentPP - 5
     Encounters = Encounters + 1
-    print(
-        "        Encounters : " .. Encounters 	..	
-        "        Items : " 			.. ItemCount 		..
-        "\n        Mankeys : " 	.. MankeyCount 	..
-        "        Meowths : " 		.. MeowthCount 	..
-        "\n        Cycles : " 	.. CycleCount 	.. 
-        "        Resets : " 		.. ResetCount 	..
-		"        ShinyEnc : " 		.. ShinyCount
-    )
     sleep(5000 + SlowModeDelay)
 end
 
@@ -520,6 +516,15 @@ function FightRoutine()
         if (SweetScentPP <= 4 or not (CurrentPokemon == 0)) then
             break
         end
+        print(
+        "        Encounters : " .. Encounters 	..	
+        "        Items : " 			.. ItemCount 		..
+        "\n        Mankeys : " 	.. MankeyCount 	..
+        "        Meowths : " 		.. MeowthCount 	..
+        "\n        Cycles : " 	.. CycleCount 	.. 
+        "        Resets : " 		.. ResetCount 	..
+		"        ShinyEnc : " 		.. ShinyCount
+        )
         sleep(500 + SlowModeDelay)
     end
 end
