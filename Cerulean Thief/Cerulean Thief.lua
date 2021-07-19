@@ -111,6 +111,7 @@ end
 
 function Regenerate()
     sleep(2000)
+    Trainer.DoItemChange(PokemonID, -1, "PARTY")
     Trainer.TalkToNPC()
     sleep(1500 + SlowModeDelay)
     KeyTyped("a")
