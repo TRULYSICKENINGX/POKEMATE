@@ -533,19 +533,19 @@ function FightRoutine()
         if (Trainer.IsInBattle()) then
             DoBattle()
         end
+        print(
+            "        Encounters : " .. Encounters 	..	
+            "        Items : " 			.. ItemCount 		..
+            "\n        Mankeys : " 	.. MankeyCount 	..
+            "        Meowths : " 		.. MeowthCount 	..
+            "\n        Cycles : " 	.. CycleCount 	.. 
+            "        Resets : " 		.. ResetCount 	..
+            "        ShinyEnc : " 		.. ShinyCount
+            )
         sleep(1000 + SlowModeDelay)
         if (SweetScentPP <= 4 or not (CurrentPokemon == 0)) then
             break
         end
-        print(
-        "        Encounters : " .. Encounters 	..	
-        "        Items : " 			.. ItemCount 		..
-        "\n        Mankeys : " 	.. MankeyCount 	..
-        "        Meowths : " 		.. MeowthCount 	..
-        "\n        Cycles : " 	.. CycleCount 	.. 
-        "        Resets : " 		.. ResetCount 	..
-		"        ShinyEnc : " 		.. ShinyCount
-        )
         sleep(500 + SlowModeDelay)
     end
 end
