@@ -1,6 +1,6 @@
-RandomMove = 1 -- 0 will use 5 pre defined routes and ~= 0 will use xoxo's random move function
+RandomMove = 0 -- 0 will use 5 pre defined routes and ~= 0 will use xoxo's random move function
 ShinyManual = 0 -- 0 will try autocatch and ~= 0 will hold script for manual catch
-InitialCycle = 0 -- to check if should wait more or not (because of initial animation)
+InitialCycle = 0 -- to check if should wait more to cut or not (because of initial animation)
 LastPokemonHealth = 12
 CurrentPokemon = 0
 Encounters = 0
