@@ -1,8 +1,9 @@
-InitialCycle = 0
-ShinyManual = 0
+RandomMove = 0 -- 0 will use 5 pre defined routes and ~= 0 will use xoxo's random move function
+ShinyManual = 0 -- 0 will try autocatch and ~= 0 will hold script for manual catch
+InitialCycle = 0 -- to check if should wait more to cut or not (because of initial animation)
 LastPokemonHealth = 12
 CurrentPokemon = 0
-Encounters = -1
+Encounters = 0
 Count = 0 -- For Shiny Encounters
 ShinyCount = 0
 ResetCount = 0
@@ -24,8 +25,8 @@ SlowModeDelay = 500 * SlowMode
 
 -- You will need a Shuppet/Banette in 1st party slot with with Thief move and Frisk Ability.
 -- Also, for Shiny automatic catching (ShinyManual = 0) you will need some UltraBalls and:
--- PKMN with False Swipe move on 2nd party slot (Smeargle?) 
--- PKMN with Thunderbolt move on 6th party slot (Starmie?).
+-- PKMN with False Swipe move on 2nd party slot (e.g. Smeargle) 
+-- PKMN with Thunderbolt move on 6th party slot (e.g. Starmie)
 
 function RelogReset()
     print("Resetting...")
@@ -102,6 +103,7 @@ function ErrorCorrection(X, Y)
 end
 
 function GoOutOfPC()
+    print("Going out of PC...")
     Trainer.MoveDown(true, 6)
     sleep(2000 + SlowModeDelay)
     while (Trainer.IsMovementBlocked()) do
@@ -111,6 +113,7 @@ end
 
 function Regenerate()
     sleep(2000)
+    Trainer.DoItemChange(PokemonID, -1, "PARTY")
     Trainer.TalkToNPC()
     sleep(1500 + SlowModeDelay)
     KeyTyped("a")
@@ -129,7 +132,19 @@ function Regenerate()
     GoOutOfPC()
 end
 
+function GoToBushRandom()
+    print("Random Route")
+    player_moveTo_XY(random(17,19),random(20,31))
+    sleep(random(500,1000))
+    player_moveTo_YX(random(21,26),random(29,31))
+    sleep(random(500,1000))
+    player_moveTo_XY(26,31)
+    CheckPosition(26,31)
+    Trainer.MoveDown(true, 1)
+end
+
 function GoToBush1()
+    print("Route #1")
     Trainer.MoveDown(true, 4)
     CheckPosition(22, 24)
     Trainer.MoveLeft(true, 4)
@@ -141,6 +156,7 @@ function GoToBush1()
     Trainer.MoveDown(true, 1)
 end
 function GoToBush2()
+    print("Route #2")
     Trainer.MoveLeft(true, 4)
     CheckPosition(19, 20)
     Trainer.MoveDown(true, 10)
@@ -150,6 +166,7 @@ function GoToBush2()
     Trainer.MoveDown(true, 3)
 end
 function GoToBush3()
+    print("Route #3")
     Trainer.MoveDown(true, 2)
     CheckPosition(22, 22)
     Trainer.MoveLeft(true, 5)
@@ -161,6 +178,7 @@ function GoToBush3()
     Trainer.MoveDown(true, 3)
 end
 function GoToBush4()
+    print("Route #4")
     Trainer.MoveDown(true, 3)
     CheckPosition(22, 23)
     Trainer.MoveLeft(true, 6)
@@ -172,6 +190,7 @@ function GoToBush4()
     Trainer.MoveDown(true, 2)
 end
 function GoToBush5()
+    print("Route #5")
     Trainer.MoveDown(true, 1)
     CheckPosition(22, 21)
     Trainer.MoveLeft(true, 4)
@@ -184,6 +203,7 @@ function GoToBush5()
 end
 
 function CutBush()
+    print("Cutting bush...")
     KeyTyped(CutHotkey)
     if InitialCycle == 0 then
         sleep(5000 + SlowModeDelay)
@@ -195,22 +215,27 @@ function CutBush()
 end
 
 function GoToRoute5()
+    print("Going to bush...")
     CheckPosition(22, 20)
-    choice = random(1, 5)
-    if (choice == 1) then
-        GoToBush1()
-    end
-    if (choice == 2) then
-        GoToBush2()
-    end
-    if (choice == 3) then
-        GoToBush3()
-    end
-    if (choice == 4) then
-        GoToBush4()
-    end
-    if (choice == 5) then
-        GoToBush5()
+    if RandomMove ~= 0 then
+        GoToBushRandom()
+    else
+        choice = random(1, 5)
+        if (choice == 1) then
+            GoToBush1()
+        end
+        if (choice == 2) then
+            GoToBush2()
+        end
+        if (choice == 3) then
+            GoToBush3()
+        end
+        if (choice == 4) then
+            GoToBush4()
+        end
+        if (choice == 5) then
+            GoToBush5()
+        end
     end
     CheckPosition(26, 31)
     CutBush()
@@ -375,7 +400,7 @@ function DoBattle()
     if (Battle.Active.GetPokemonRarity(1, 1) == "SHINY" or Battle.Active.GetPokemonRarity(1, 2) == "SHINY" or Battle.Active.GetPokemonRarity(1, 3) == "SHINY") then
 		ShinyCount = ShinyCount + 1
 		print("HORDE SHINY FOUND")
-		if ShinyManual == 1 then
+		if ShinyManual ~= 0 then
 			ShinyAlert()
 		end
 		CatchHordeShiny()
@@ -455,7 +480,7 @@ function CheckForWildEncounter()
         if (Battle.Active.GetPokemonRarity(1, 0) == "SHINY") then
 			ShinyCount = ShinyCount + 1
             print("SINGLE SHINY FOUND")
-			if ShinyManual == 1 then
+			if ShinyManual ~= 0 then
 				ShinyAlert()
 			end
             CatchSingleShiny()
@@ -476,24 +501,17 @@ function CheckForWildEncounter()
 end
 
 function GoBackToPC()
+    print("Going back to PC...")
     sleep(500)
     KeyTyped(TeleportHotkey)
     sleep(5000 + SlowModeDelay)
 end
 
 function UseSweetScent()
+    print("Using Sweet Scent...")
     KeyTyped(SweetScentHotkey)
     SweetScentPP = SweetScentPP - 5
     Encounters = Encounters + 1
-    print(
-        "        Encounters : " .. Encounters 	..	
-        "        Items : " 			.. ItemCount 		..
-        "\n        Mankeys : " 	.. MankeyCount 	..
-        "        Meowths : " 		.. MeowthCount 	..
-        "\n        Cycles : " 	.. CycleCount 	.. 
-        "        Resets : " 		.. ResetCount 	..
-		"        ShinyEnc : " 		.. ShinyCount
-    )
     sleep(5000 + SlowModeDelay)
 end
 
@@ -503,16 +521,28 @@ function FightRoutine()
         if (not (Trainer.GetX() == 26 and Trainer.GetY() == 5) or not (Trainer.GetMapID() == 3) or not (Trainer.GetCityName() == "ROUTE 5")) then
             print("Got teleported, GM Maybe?")
             MessageBox("Got teleported, GM Maybe?")
-            sleep(random(5000,10000))
+            sleep(random(4000,8000))
+            GoBackToPC()	
+            Logout()
+            sleeph(24)
             break
         end
+        Trainer.DoItemChange(PokemonID, -1, "PARTY")
         UseSweetScent()
         sleep(500 + SlowModeDelay)
         if (Trainer.IsInBattle()) then
             DoBattle()
         end
+        print(
+            "        Encounters : " .. Encounters 	..	
+            "        Items : " 			.. ItemCount 		..
+            "\n        Mankeys : " 	.. MankeyCount 	..
+            "        Meowths : " 		.. MeowthCount 	..
+            "\n        Cycles : " 	.. CycleCount 	.. 
+            "        Resets : " 		.. ResetCount 	..
+            "        ShinyEnc : " 		.. ShinyCount
+            )
         sleep(1000 + SlowModeDelay)
-        Trainer.DoItemChange(PokemonID, -1, "PARTY")
         if (SweetScentPP <= 4 or not (CurrentPokemon == 0)) then
             break
         end
@@ -523,6 +553,44 @@ end
 function ShinyAlert()
 	MessageBox("SHINY ALERT", "The Bot found a shiny ^^")
 	sleeph(24)
+end
+
+function player_moveTo_XY(x, y)
+	sX = x - Trainer.GetX()
+	sY = y - Trainer.GetY()
+	if sX > 0 then
+		Trainer.MoveRight(true, sX);
+	else
+		Trainer.MoveLeft(true, sX *-1);
+	end
+	if sY > 0 then
+		Trainer.MoveDown(true, sY);
+	else
+		Trainer.MoveUp(true, sY*-1);
+	end
+	--you can insert if in battle check there
+	if Trainer.GetX() ~= x or Trainer.GetY() ~= y then
+	player_moveTo_YX(x,y)
+	end
+end
+
+function player_moveTo_YX(x, y)
+	sX = x - Trainer.GetX()
+	sY = y - Trainer.GetY()
+	if sY > 0 then
+		Trainer.MoveDown(true, sY);
+	else
+		Trainer.MoveUp(true, sY*-1);
+	end
+	if sX > 0 then
+		Trainer.MoveRight(true, sX);
+	else
+		Trainer.MoveLeft(true, sX *-1);
+	end
+	--you can insert if in battle check there
+	if Trainer.GetX() ~= x or Trainer.GetY() ~= y then
+		player_moveTo_XY(x,y)
+	end
 end
 
 function Main()
